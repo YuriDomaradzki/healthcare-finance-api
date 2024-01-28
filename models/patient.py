@@ -12,11 +12,13 @@ class PatientModel(db.Model):
     LAST_NAME = db.Column(db.String, nullable=False)
     DATE_OF_BIRTH = db.Column(db.DateTime, nullable=False)
 
+    transactions = db.relationship("TransactionsModel", back_populates="patient")
+
     def as_dict(self):
         return {
             "ID": self.UUID,
-            "FIRST_NAME": self.FIRST_NAME,
-            "LAST_NAME": self.LAST_NAME,
-            "DATE_OF_BIRTH": format_date(date=self.DATE_OF_BIRTH, format="%Y-%m-%d")
+            "FIRST NAME": self.FIRST_NAME,
+            "LAST NAME": self.LAST_NAME,
+            "DATE OF BIRTH": format_date(date=self.DATE_OF_BIRTH, format="%Y-%m-%d")
         }
 

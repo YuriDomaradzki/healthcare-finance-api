@@ -9,7 +9,8 @@ class PharmacyModel(db.Model):
     UUID = db.Column(db.String, primary_key=True, default=str(uuid.uuid4()))
     NAME = db.Column(db.String, nullable=False)
     CITY = db.Column(db.String, nullable=False)
-    transactions = db.relationship("TransationsModel", back_populates ="pharmacy", lazy="dynamic") 
+
+    transactions = db.relationship("TransactionsModel", back_populates="pharmacy")
 
     def as_dict(self):
         return {
