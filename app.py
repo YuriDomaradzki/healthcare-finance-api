@@ -8,6 +8,7 @@ from healthcare_finance_api.models.db import db
 from healthcare_finance_api.resources.patient import blp as PatientsBlueprint
 from healthcare_finance_api.resources.phamacy import blp as PharmaciesBlueprint
 from healthcare_finance_api.resources.transactions import blp as TransactionsBlueprint
+from healthcare_finance_api.resources.user import blp as UsersBlueprint
 
 ABSOLUTE_PATH = os.path.dirname(__file__)
 DATABASE_PATH = os.path.join(ABSOLUTE_PATH, 
@@ -32,6 +33,7 @@ def create_app():
     api.register_blueprint(PatientsBlueprint)
     api.register_blueprint(PharmaciesBlueprint)
     api.register_blueprint(TransactionsBlueprint)
+    api.register_blueprint(UsersBlueprint)
 
     return app
 

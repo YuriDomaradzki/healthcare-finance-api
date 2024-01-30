@@ -96,3 +96,26 @@ def string_amount_validation(amount: str) -> bool:
         return True
     except:
         return False
+
+
+def string_is_alphanumeric(text: str) -> bool:
+    """
+        Verifies if the string is alphanumeric or not.
+
+        Parameters
+        ----------
+        text : str
+            The string to be validated.
+
+        Returns
+        -------
+        bool
+            True if the string is valid, False otherwise.
+
+        Example
+        -------
+        is_valid = string_date_validation("Yuri_Domaradzki") # Returns True
+    """
+    if not all(char.isalnum() for char in text):
+        return False
+    return True
