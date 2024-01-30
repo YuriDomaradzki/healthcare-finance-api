@@ -1,14 +1,13 @@
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
 
-from models import PharmacyModel
-from utils import string_validation
+from healthcare_finance_api.models import PharmacyModel
+from healthcare_finance_api.utils import string_validation
 
 
 blp = Blueprint("Pharmacies", __name__, description="Operations on Pharmacies")
 
 
-# TODO: SANITIZAR A ENTRADA E A SAÍDA
 @blp.route("/pharmacies")
 class PharmaciesList(MethodView):
 
@@ -24,7 +23,6 @@ class PharmaciesList(MethodView):
             abort(500, message=f"An error has occurred: {str(e)}")
 
 
-# TODO: SANITIZAR A ENTRADA E A SAÍDA
 @blp.route("/pharmacy/name/<string:name>")
 class PharmacyByName(MethodView):
 
@@ -46,7 +44,6 @@ class PharmacyByName(MethodView):
             abort(500, message=f"An error has occurred: {str(e)}")
 
 
-# TODO: SANITIZAR A ENTRADA E A SAÍDA
 @blp.route("/pharmacy/city/<string:city>")
 class PharmacyByCity(MethodView):
 

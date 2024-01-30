@@ -3,8 +3,8 @@ from sqlalchemy import func
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
 
-from models import PatientModel
-from utils import string_validation, str_to_datetime
+from healthcare_finance_api.models import PatientModel
+from healthcare_finance_api.utils import string_validation
 
 
 blp = Blueprint("Patients", __name__, description="Operations on patients")

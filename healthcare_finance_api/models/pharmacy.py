@@ -1,5 +1,6 @@
 import uuid
-from db import db
+
+from healthcare_finance_api.models.db import db
 
 
 class PharmacyModel(db.Model):

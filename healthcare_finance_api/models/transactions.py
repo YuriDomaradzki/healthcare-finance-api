@@ -1,7 +1,7 @@
 import uuid
-from db import db
 
-from utils import format_date
+from healthcare_finance_api.models.db import db
+from healthcare_finance_api.utils import format_date
 
 
 class TransactionsModel(db.Model):
