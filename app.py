@@ -10,6 +10,8 @@ from healthcare_finance_api.resources.phamacy import blp as PharmaciesBlueprint
 from healthcare_finance_api.resources.transactions import blp as TransactionsBlueprint
 
 ABSOLUTE_PATH = os.path.dirname(__file__)
+DATABASE_PATH = os.path.join(ABSOLUTE_PATH, 
+                             'healthcare_finance_api/database/HealthCareFinance.db')
 
 def create_app():
 
@@ -20,7 +22,8 @@ def create_app():
     app.config["API_VERSION"] = "v1"
     app.config["OPENAPI_VERSION"] = "3.0.3"
     app.config["OPENAPI_URL_PREFIX"] = "/"
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL", f"sqlite:///{os.path.join(ABSOLUTE_PATH, 'healthcare_finance_api/database/HealthCareFinance.db')}")
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL", 
+                                                      f"sqlite:///{DATABASE_PATH}")
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.init_app(app)
 

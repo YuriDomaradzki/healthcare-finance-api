@@ -49,12 +49,12 @@ def string_validation(text: str) -> bool:
 
 def string_date_validation(date: str) -> bool:
     """
-        Validate a string to ensure it only contains letters 
+        Validate a string to ensure it only contains numbers and characters such as '/', '-'. 
 
         Parameters
         ----------
         date : str
-            The date as stringto be validated.
+            The date as string to be validated.
 
         Returns
         -------
@@ -63,9 +63,36 @@ def string_date_validation(date: str) -> bool:
 
         Example
         -------
-        is_valid = string_date_validation("Valid_String_123") # Returns False
-        is_valid = string_date_validation("DROGA MAIS") # Returns True
+        is_valid = string_date_validation("2020-01-08a") # Returns False
+        is_valid = string_date_validation("2020-01-08") # Returns True
     """
     if not all(char.isalnum() or char in ['/', '-'] for char in date):
         return False
     return True
+
+
+def string_amount_validation(amount: str) -> bool:
+    """
+        Validate a string to ensure it only contains numbers and ',' to ensure that the string
+        represents a amount value.
+
+        Parameters
+        ----------
+        amount : str
+            The amount as string to be validated.
+
+        Returns
+        -------
+        bool
+            True if the amount is valid, False otherwise.
+
+        Example
+        -------
+        is_valid = string_amount_validation("40.68A") # Returns False
+        is_valid = string_amount_validation("400.14") # Returns True
+    """
+    try:
+        amount = float(amount)
+        return True
+    except:
+        return False
