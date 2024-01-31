@@ -2,6 +2,7 @@ from sqlalchemy import func, and_
 
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
+from flask_jwt_extended import jwt_required
 
 from healthcare_finance_api.models import TransactionsModel, PharmacyModel, PatientModel
 from healthcare_finance_api.utils import string_validation, string_date_validation, string_amount_validation
@@ -13,6 +14,7 @@ blp = Blueprint("Transactions", __name__, description="Operations on transaction
 @blp.route("/transactions")
 class Transactions(MethodView):
 
+    @jwt_required()
     def get(self):
         try:
             transactions = [transaction.as_dict() for transaction in 
@@ -30,6 +32,7 @@ class Transactions(MethodView):
 @blp.route("/transactions/pharmacy/<string:name>")
 class TranscationsByPharmacyName(MethodView):
 
+    @jwt_required()
     def get(self, name: str):
         if not string_validation(text=name):
             raise ValueError("The pharmacy name entered for the query is in an invalid format!")
@@ -56,6 +59,7 @@ class TranscationsByPharmacyName(MethodView):
 @blp.route("/transactions/pharmacy/<string:name>/date/<string:date>")
 class TranscationsByDate(MethodView):
 
+    @jwt_required()
     def get(self, name: str, date: str):
         if not string_date_validation(date=date) or not string_validation(text=name):
             raise ValueError("The pharmacy name or transaction date entered for"\
@@ -85,6 +89,7 @@ class TranscationsByDate(MethodView):
 @blp.route("/transactions/patient/<string:first_name>/<string:last_name>")
 class TransactionsByPatientFirstAndLastName(MethodView):
 
+    @jwt_required()
     def get(self, first_name: str, last_name: str):
         if not string_validation(text=first_name) or not string_validation(text=last_name):
             raise ValueError("The patient's first or last name entered "
@@ -114,6 +119,7 @@ class TransactionsByPatientFirstAndLastName(MethodView):
 @blp.route("/transactions/byPeriod/<string:start_date>/<string:end_date>")
 class TransactionsByPeriod(MethodView):
 
+    @jwt_required()
     def get(self, start_date: str, end_date: str):
         if not string_date_validation(date=start_date) or not string_date_validation(date=end_date):
             raise ValueError("The transactions' start or end date entered for the "
@@ -143,6 +149,7 @@ class TransactionsByPeriod(MethodView):
 @blp.route("/transactions/byValues/<string:min_value>/<string:max_value>")
 class TransactionsByValues(MethodView):
 
+    @jwt_required()
     def get(self, min_value: str, max_value: str):
         if not string_amount_validation(amount=min_value) or not string_amount_validation(amount=max_value):
             raise ValueError("The minimum or maximum value of the transactions entered in the "\

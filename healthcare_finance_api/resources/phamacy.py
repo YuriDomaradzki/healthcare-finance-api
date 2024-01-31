@@ -1,5 +1,6 @@
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
+from flask_jwt_extended import jwt_required
 
 from healthcare_finance_api.models import PharmacyModel
 from healthcare_finance_api.utils import string_validation
@@ -7,10 +8,10 @@ from healthcare_finance_api.utils import string_validation
 
 blp = Blueprint("Pharmacies", __name__, description="Operations on Pharmacies")
 
-
 @blp.route("/pharmacies")
 class PharmaciesList(MethodView):
 
+    @jwt_required()
     def get(self):
         try:
             pharmacies = [pharmacy.as_dict() for pharmacy in PharmacyModel.query.order_by(PharmacyModel.UUID).all()]
@@ -26,6 +27,7 @@ class PharmaciesList(MethodView):
 @blp.route("/pharmacy/name/<string:name>")
 class PharmacyByName(MethodView):
 
+    @jwt_required()
     def get(self, name):
         if not string_validation(text=name):
             raise ValueError("The name entered for the query is in an invalid format!")
@@ -47,6 +49,7 @@ class PharmacyByName(MethodView):
 @blp.route("/pharmacy/city/<string:city>")
 class PharmacyByCity(MethodView):
 
+    @jwt_required()
     def get(self, city):
         if not string_validation(text=city):
             raise ValueError("The city entered for the query is in an invalid format!")
@@ -68,6 +71,7 @@ class PharmacyByCity(MethodView):
 @blp.route("/pharmacy/city/<string:city>/name/<string:name>")
 class PharmacyByCityAndName(MethodView):
 
+    @jwt_required()
     def get(self, city, name):
         if not string_validation(text=city) or not string_validation(text=name):
             raise ValueError("The city or pharmacy name entered for the query is in an invalid format!")

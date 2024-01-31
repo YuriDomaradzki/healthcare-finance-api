@@ -22,8 +22,7 @@ class UsersModel(db.Model):
         """
         return {
             'ID': self.UUID,
-            'USERNAME': self.USERNAME,
-            'PASSWORD': self.PASSWORD
+            'USERNAME': self.USERNAME
         }
 
 

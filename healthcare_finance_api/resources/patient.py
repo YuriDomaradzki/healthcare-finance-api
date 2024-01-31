@@ -2,6 +2,7 @@ from sqlalchemy import func
 
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
+from flask_jwt_extended import jwt_required
 
 from healthcare_finance_api.models import PatientModel
 from healthcare_finance_api.utils import string_validation
@@ -12,6 +13,8 @@ blp = Blueprint("Patients", __name__, description="Operations on patients")
 
 @blp.route("/patients")
 class PatientsList(MethodView):
+
+    @jwt_required()
     def get(self):
         try:
             patients = [patients.as_dict() for patients in PatientModel.query.order_by(PatientModel.UUID).all()]
@@ -27,6 +30,7 @@ class PatientsList(MethodView):
 @blp.route("/patient/name/<string:name>")
 class PatientByFullName(MethodView):
 
+    @jwt_required()
     def get(self, name: str):
         if not string_validation(text=name):
             raise ValueError("The first name entered for the query is in an invalid format!")
@@ -48,6 +52,7 @@ class PatientByFullName(MethodView):
 @blp.route("/patient/name/<string:name>/lastName/<string:last_name>")
 class PatientByFullName(MethodView):
 
+    @jwt_required()
     def get(self, name: str, last_name: str):
         if not string_validation(text=name) or not string_validation(text=last_name):
             raise ValueError("The first or last name entered for the query is in an invalid format!")
@@ -70,6 +75,7 @@ class PatientByFullName(MethodView):
 @blp.route("/patient/birthday/<string:birthday>")
 class PatientByBirthday(MethodView):
 
+    @jwt_required()
     def get(self, birthday: str):
         if not all(char.isalnum() or char in ['/', '-'] for char in birthday):
             raise ValueError("The birthday entered for the query is in an invalid format!")
