@@ -128,7 +128,7 @@ O endpoint `Register` é projetado para facilitar a autenticação de usuários,
 
 **Endpoint:**
 
-    POST {url}/register
+    POST http://127.0.0.1:5000/register
 
 **Headers:**
 
@@ -155,7 +155,7 @@ O endpoint `Login` é projetado para facilitar a autenticação de usuários, fo
 
 **Endpoint:**
 
-    POST {url}/login
+    POST http://127.0.0.1:5000/login
 
 **Headers:**
 
@@ -181,7 +181,7 @@ O endpoint `Refresh` é uma extensão do sistema de autenticação proporcionado
 
 **Endpoint:**
 
-    POST {url}/refresh
+    POST http://127.0.0.1:5000/refresh
 
 **Headers:**
 
@@ -205,7 +205,7 @@ O endpoint `Logout` representa uma extensão vital do sistema de autenticação 
 
 **Endpoint:**
 
-    POST {url}/logout
+    POST http://127.0.0.1:5000/logout
 
 **Headers:**
 
@@ -232,7 +232,7 @@ O endpoint `User` desempenha um papel central na gestão de informações do usu
 
 **Endpoint:**
 
-    GET {url}/user/{username}
+    GET http://127.0.0.1:5000/user/{username}
 
 **Headers:**
 
@@ -242,7 +242,7 @@ O endpoint `User` desempenha um papel central na gestão de informações do usu
 
 **Exemplo:**
 
-    GET {url}/user/Yuri
+    GET http://127.0.0.1:5000/user/Yuri
 
 **Retorno:**
 
@@ -260,11 +260,11 @@ O endpoint `User` desempenha um papel central na gestão de informações do usu
 
 **Endpoint:**
 
-    PUT {url}/user/{username}
+    PUT http://127.0.0.1:5000/user/{username}
 
 **Exemplo:**
 
-    GET {url}/user/Yuri
+    GET http://127.0.0.1:5000/user/Yuri
 
 **Headers:**
 
@@ -284,7 +284,7 @@ O endpoint `User` desempenha um papel central na gestão de informações do usu
 
 **Endpoint:**
 
-    DELETE {url}/user/{username}
+    DELETE http://127.0.0.1:5000/user/{username}
 
 **Headers:**
 
@@ -294,7 +294,7 @@ O endpoint `User` desempenha um papel central na gestão de informações do usu
 
 **Exemplo:**
 
-    DELETE {url}/user/Yuri
+    DELETE http://127.0.0.1:5000/user/Yuri
 
 **Retorno:**
 
@@ -317,7 +317,7 @@ O endpoint `Patients` destina-se a fornecer informações detalhadas sobre os pa
 
 **Endpoint:**
 
-    GET {url}/patients
+    GET http://127.0.0.1:5000/patients
 
 **Headers:**
 
@@ -350,7 +350,7 @@ O endpoint `Patients` destina-se a fornecer informações detalhadas sobre os pa
 
 **Endpoint:**
 
-    GET {url}/patient/name/{first_name}
+    GET http://127.0.0.1:5000/patient/name/{first_name}
 
 **Headers:**
 
@@ -360,7 +360,7 @@ O endpoint `Patients` destina-se a fornecer informações detalhadas sobre os pa
 
 **Exemplo:**
 
-    GET {url}/patient/name/JOANA
+    GET http://127.0.0.1:5000/patient/name/JOANA
 
 **Retorno:**
 
@@ -386,7 +386,7 @@ O endpoint `Patients` destina-se a fornecer informações detalhadas sobre os pa
 
 **Endpoint:**
 
-    GET {url}/patient/birthday/{birthday}
+    GET http://127.0.0.1:5000/patient/birthday/{birthday}
 
 **Headers:**
 
@@ -396,7 +396,7 @@ O endpoint `Patients` destina-se a fornecer informações detalhadas sobre os pa
 
 **Exemplo:**
 
-    GET {url}/patient/birthday/1984-12-05
+    GET http://127.0.0.1:5000/patient/birthday/1984-12-05
 
 **Retorno:**
 
@@ -416,7 +416,7 @@ O endpoint `Patients` destina-se a fornecer informações detalhadas sobre os pa
 
 **Endpoint:**
 
-    GET {url}/patient/name/{first_name}/lastName/{last_name}
+    GET http://127.0.0.1:5000/patient/name/{first_name}/lastName/{last_name}
 
 **Headers:**
 
@@ -426,7 +426,7 @@ O endpoint `Patients` destina-se a fornecer informações detalhadas sobre os pa
 
 **Exemplo:**
 
-    GET {url}/patient/name/JOANA/lastName/Silva
+    GET http://127.0.0.1:5000/patient/name/JOANA/lastName/Silva
 
 **Retorno:**
 
@@ -457,7 +457,7 @@ O endpoint `Pharmacies` é dedicado a fornecer informações detalhadas sobre fa
 
 **Endpoint:**
 
-    GET {url}/pharmacies
+    GET http://127.0.0.1:5000/pharmacies
 
 **Headers:**
 
@@ -489,11 +489,11 @@ O endpoint `Pharmacies` é dedicado a fornecer informações detalhadas sobre fa
 
 **Endpoint:**
 
-    GET {url}/pharmacy/name/{name}
+    GET http://127.0.0.1:5000/pharmacy/name/{name}
 
 **Exemplo:**
 
-    GET {url}/pharmacy/name/Droga Mais
+    GET http://127.0.0.1:5000/pharmacy/name/Droga Mais
 
 **Headers:**
 
@@ -524,11 +524,11 @@ O endpoint `Pharmacies` é dedicado a fornecer informações detalhadas sobre fa
 
 **Endpoint:**
 
-    GET {url}/pharmacy/city/{city_name}
+    GET http://127.0.0.1:5000/pharmacy/city/{city_name}
 
 **Exemplo:**
 
-    GET {url}/pharmacy/city/Sao Simao
+    GET http://127.0.0.1:5000/pharmacy/city/Sao Simao
 
 **Headers:**
 
@@ -559,11 +559,11 @@ O endpoint `Pharmacies` é dedicado a fornecer informações detalhadas sobre fa
 
 **Endpoint:**
 
-    GET {url}/pharmacy/city/{city_name}/name/{name}
+    GET http://127.0.0.1:5000/pharmacy/city/{city_name}/name/{name}
 
 **Exemplo:**
 
-    GET {url}/pharmacy/city/Sao Paulo/name/Droga Mais
+    GET http://127.0.0.1:5000/pharmacy/city/Sao Paulo/name/Droga Mais
 
 **Headers:**
 
@@ -599,7 +599,7 @@ O endpoint `Transactions` é projetado para fornecer informações detalhadas so
 
 **Endpoint:**
 
-    GET {url}/transactions
+    GET http://127.0.0.1:5000/transactions
 
 **Headers:**
 
@@ -637,11 +637,11 @@ O endpoint `Transactions` é projetado para fornecer informações detalhadas so
 
 **Endpoint:**
 
-    GET {url}/transactions/pharmacy/{name}
+    GET http://127.0.0.1:5000/transactions/pharmacy/{name}
 
 **Exemplo:**
 
-    GET {url}/transactions/pharmacy/Droga Mais
+    GET http://127.0.0.1:5000/transactions/pharmacy/Droga Mais
 
 **Headers:**
 
@@ -694,11 +694,11 @@ O endpoint `Transactions` é projetado para fornecer informações detalhadas so
 
 **Endpoint:**
 
-    GET {url}/transactions/pharmacy/{name}/date/{date}
+    GET http://127.0.0.1:5000/transactions/pharmacy/{name}/date/{date}
 
 **Exemplo:**
 
-    GET {url}/transactions/pharmacy/DROGAO SUPER/date/2020-02-05
+    GET http://127.0.0.1:5000/transactions/pharmacy/DROGAO SUPER/date/2020-02-05
 
 **Headers:**
 
@@ -735,11 +735,11 @@ O endpoint `Transactions` é projetado para fornecer informações detalhadas so
 
 **Endpoint:**
 
-    GET {url}/transactions/patient/{first_name}/{last_name}
+    GET http://127.0.0.1:5000/transactions/patient/{first_name}/{last_name}
 
 **Exemplo:**
 
-    GET {url}/transactions/patient/Joana/SILVA
+    GET http://127.0.0.1:5000/transactions/patient/Joana/SILVA
 
 **Headers:**
 
@@ -777,11 +777,11 @@ O endpoint `Transactions` é projetado para fornecer informações detalhadas so
 
 **Endpoint:**
 
-    GET {url}/transactions/byPeriod/{first_date}/{end_date}
+    GET http://127.0.0.1:5000/transactions/byPeriod/{first_date}/{end_date}
 
 **Exemplo:**
 
-    GET {url}/transactions/byPeriod/2020-01-01/2020-01-08
+    GET http://127.0.0.1:5000/transactions/byPeriod/2020-01-01/2020-01-08
 
 **Headers:**
 
@@ -835,11 +835,11 @@ O endpoint `Transactions` é projetado para fornecer informações detalhadas so
 
 **Endpoint:**
 
-    GET {url}/transactions/byValues/{min_value}/{max_value}
+    GET http://127.0.0.1:5000/transactions/byValues/{min_value}/{max_value}
 
 **Exemplo:**
 
-    GET {url}/transactions/byValues/5/12
+    GET http://127.0.0.1:5000/transactions/byValues/5/12
 
 **Headers:**
 
