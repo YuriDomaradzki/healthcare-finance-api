@@ -12,7 +12,7 @@ run:
 
 build:
 	docker build -t healthcare-finance-api . && \
-	docker run -p 5000:5000 healthcare-finance-api
+	docker run -p 5000:5000 healthcare-finance-api --name healthcare-finance-api
 
 test_patient:
 	python healthcare_finance_api/tests/test_patient.py
