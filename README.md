@@ -6,6 +6,18 @@
 ![API Badge](https://img.shields.io/badge/API-healthcare_finance_api-brightgreen)
 
 
+<style>
+    h1, h2 {
+        text-decoration: none; border-bottom: none;
+    }
+    p {
+        text-align: justify; font-size: 16px;
+    }
+    a {
+        font-size: 16px;
+    }
+</style>
+
 <h1> healthcare-finance-api </h1>
 <br>
 
