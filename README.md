@@ -2,20 +2,7 @@
 ![Python](https://img.shields.io/badge/Python-3.10-blue)
 ![API Badge](https://img.shields.io/badge/API-healthcare_finance_api-brightgreen)
 
-
-<style>
-    h1, h2 {
-        text-decoration: none; border-bottom: none;
-    }
-    p {
-        text-align: justify; font-size: 16px;
-    }
-    a {
-        font-size: 16px;
-    }
-</style>
-
-<h1> healthcare-finance-api </h1>
+# healthcare-finance-api
 <br>
 
 Este repositório contém a implementação de uma API REST privada para o setor financeiro de uma empresa de saúde. A API fornece acesso seguro a informações sobre compras feitas pelos pacientes/clientes da empresa, abrangendo dados sobre pacientes, farmácias e transações.
