@@ -7,14 +7,14 @@ class TestTransactionsResources(unittest.TestCase):
     def setUp(self):
         self.base_url = "http://127.0.0.1:5000/"
 
-        payload = {"username": "yuri", "password": "teste1234"}
-        response = requests.post(f"{self.base_url}/login", json=payload)
+        payload = {"username": "Yuri", "password": "teste1234"}
+        response = requests.post(f"{self.base_url}login", json=payload)
         self.token = response.json().get("access_token")
 
     # TEST IN {self.base_url}/transactions
     def test_list_transactions_values_must_return_list(self):
         headers = {"Authorization": f"Bearer {self.token}"}
-        response = requests.get(f"{self.base_url}/transactions", headers=headers)
+        response = requests.get(f"{self.base_url}transactions", headers=headers)
 
         self.assertEqual(response.status_code, 200)
         self.assertIsInstance(response.json()["Transactions"], list)
@@ -24,7 +24,7 @@ class TestTransactionsResources(unittest.TestCase):
         name = "Droga Mais"
         headers = {"Authorization": f"Bearer {self.token}"}
         response = requests.get(
-            f"{self.base_url}/transactions/pharmacy/{name}", headers=headers
+            f"{self.base_url}transactions/pharmacy/{name}", headers=headers
         )
 
         self.assertEqual(response.status_code, 200)
@@ -33,7 +33,7 @@ class TestTransactionsResources(unittest.TestCase):
         name = ""
         headers = {"Authorization": f"Bearer {self.token}"}
         response = requests.get(
-            f"{self.base_url}/transactions/pharmacy/{name}", headers=headers
+            f"{self.base_url}transactions/pharmacy/{name}", headers=headers
         )
 
         self.assertNotEqual(response.status_code, 200)
@@ -46,7 +46,7 @@ class TestTransactionsResources(unittest.TestCase):
         transaction_date = "2020-02-05"
         headers = {"Authorization": f"Bearer {self.token}"}
         response = requests.get(
-            f"{self.base_url}/transactions/pharmacy/{name}/date/{transaction_date}",
+            f"{self.base_url}transactions/pharmacy/{name}/date/{transaction_date}",
             headers=headers,
         )
 
@@ -59,7 +59,7 @@ class TestTransactionsResources(unittest.TestCase):
         transaction_date = "2020-02-05"
         headers = {"Authorization": f"Bearer {self.token}"}
         response = requests.get(
-            f"{self.base_url}/transactions/pharmacy/{name}/date/{transaction_date}",
+            f"{self.base_url}transactions/pharmacy/{name}/date/{transaction_date}",
             headers=headers,
         )
 
@@ -72,7 +72,7 @@ class TestTransactionsResources(unittest.TestCase):
         transaction_date = "20 de abril de 2020"
         headers = {"Authorization": f"Bearer {self.token}"}
         response = requests.get(
-            f"{self.base_url}/transactions/pharmacy/{name}/date/{transaction_date}",
+            f"{self.base_url}transactions/pharmacy/{name}/date/{transaction_date}",
             headers=headers,
         )
 
@@ -85,7 +85,7 @@ class TestTransactionsResources(unittest.TestCase):
         first_name, last_name = "Joana Silva".split(" ")
         headers = {"Authorization": f"Bearer {self.token}"}
         response = requests.get(
-            f"{self.base_url}/transactions/patient/{first_name}/{last_name}",
+            f"{self.base_url}transactions/patient/{first_name}/{last_name}",
             headers=headers,
         )
 
@@ -97,7 +97,7 @@ class TestTransactionsResources(unittest.TestCase):
         first_name, last_name = "Joana1 Silva".split(" ")
         headers = {"Authorization": f"Bearer {self.token}"}
         response = requests.get(
-            f"{self.base_url}/transactions/patient/{first_name}/{last_name}",
+            f"{self.base_url}transactions/patient/{first_name}/{last_name}",
             headers=headers,
         )
 
@@ -109,7 +109,7 @@ class TestTransactionsResources(unittest.TestCase):
         first_name, last_name = "Joana ".split(" ")
         headers = {"Authorization": f"Bearer {self.token}"}
         response = requests.get(
-            f"{self.base_url}/transactions/patient/{first_name}/{last_name}",
+            f"{self.base_url}transactions/patient/{first_name}/{last_name}",
             headers=headers,
         )
 
@@ -120,7 +120,7 @@ class TestTransactionsResources(unittest.TestCase):
         start_date, end_date = "2020-01-01/2020-01-08".split("/")
         headers = {"Authorization": f"Bearer {self.token}"}
         response = requests.get(
-            f"{self.base_url}/transactions/byPeriod/{start_date}/{end_date}",
+            f"{self.base_url}transactions/byPeriod/{start_date}/{end_date}",
             headers=headers,
         )
 
@@ -130,7 +130,7 @@ class TestTransactionsResources(unittest.TestCase):
         start_date, end_date = "20 de janeiro de 2020/2020-01-08".split("/")
         headers = {"Authorization": f"Bearer {self.token}"}
         response = requests.get(
-            f"{self.base_url}/transactions/byPeriod/{start_date}/{end_date}",
+            f"{self.base_url}transactions/byPeriod/{start_date}/{end_date}",
             headers=headers,
         )
 
@@ -140,7 +140,7 @@ class TestTransactionsResources(unittest.TestCase):
         start_date, end_date = "2020-01-01/ ".split("/")
         headers = {"Authorization": f"Bearer {self.token}"}
         response = requests.get(
-            f"{self.base_url}/transactions/byPeriod/{start_date}/{end_date}",
+            f"{self.base_url}transactions/byPeriod/{start_date}/{end_date}",
             headers=headers,
         )
 
@@ -151,7 +151,7 @@ class TestTransactionsResources(unittest.TestCase):
         min_value, max_value = "10.00", "20.99"
         headers = {"Authorization": f"Bearer {self.token}"}
         response = requests.get(
-            f"{self.base_url}/transactions/byValues/{min_value}/{max_value}",
+            f"{self.base_url}transactions/byValues/{min_value}/{max_value}",
             headers=headers,
         )
 
@@ -161,7 +161,7 @@ class TestTransactionsResources(unittest.TestCase):
         min_value, max_value = "R$ 10,00", "20.99"
         headers = {"Authorization": f"Bearer {self.token}"}
         response = requests.get(
-            f"{self.base_url}/transactions/byValues/{min_value}/{max_value}",
+            f"{self.base_url}transactions/byValues/{min_value}/{max_value}",
             headers=headers,
         )
 
@@ -171,7 +171,7 @@ class TestTransactionsResources(unittest.TestCase):
         min_value, max_value = "10.00", ""
         headers = {"Authorization": f"Bearer {self.token}"}
         response = requests.get(
-            f"{self.base_url}/transactions/byValues/{min_value}/{max_value}",
+            f"{self.base_url}transactions/byValues/{min_value}/{max_value}",
             headers=headers,
         )
 

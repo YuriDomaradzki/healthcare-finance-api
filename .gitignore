@@ -17,3 +17,6 @@ venv.bak/
 .flake8
 .isort.cfg
 pyproject.toml
+
+
+*.egg-info
