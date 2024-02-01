@@ -36,6 +36,14 @@ Este repositório contém a implementação de uma API REST privada para o setor
         - [Consulta de farmácias pelo nome](#endpoint_pharmacy_name_get)
         - [Consulta de farmácias por cidade](#endpoint_pharmacy_city_get)
         - [Consulta de farmácias por nome e cidade](#endpoint_pharmacy_city_name_get)
+   - [Endpoint Transactions](#endpoint_transactions)
+        - [Listar todas as transações](#endpoint_list_transactions)
+        - [Consulta as transações de uma farmácia pelo nome](#endpoint_transaction_pharmacy_name_get)
+        - [Consulta as transações de uma farmácia pelo nome para uma determinada data](#endpoint_transaction_pharmacy_name_date_get)
+        - [Consulta as transações de um paciente pelo nome completo](#endpoint_transaction_patient_get)
+        - [Consulta as transações de um determinado período](#endpoint_transaction_period_get)
+        - [Consulta as transações por uma faixa de valores](#endpoint_transaction_byvalues_get)
+
 
 <a id="instalation"></a>
 ## Instalação
@@ -566,5 +574,309 @@ O endpoint `Pharmacies` é dedicado a fornecer informações detalhadas sobre fa
                 "ID": "PHARM0006",
                 "NAME": "DROGA MAIS"
             }
+        ]
+    }
+
+
+<a id="endpoint_transactions"></a>
+### **8.** Endpoint: Transactions
+O endpoint `Transactions` é projetado para fornecer informações detalhadas sobre as transações realizadas no sistema, permitindo um acesso eficiente e seguro aos dados financeiros relacionados. Ao utilizar este endpoint, os desenvolvedores podem obter informações cruciais sobre transações específicas, histórico financeiro e outras métricas relacionadas.
+
+**Recursos Principais:**
+- Listar todas as transações
+- Buscar transações por data
+- Buscar transações por tipo
+- Detalhes específicos de cada transação
+
+<a id="endpoint_list_transactions"></a>
+#### **8.1.** Listar todas as transações [GET]
+
+**Endpoint:**
+
+    GET {url}/transactions
+
+**Headers:**
+
+    {
+        "Authorization": f"Bearer <access_token>"
+    }
+
+**Retorno:**
+
+    {
+        "Transactions": [
+            {
+                "AMOUNT": "R$ 40.68",
+                "ID": "TRAN0111",
+                "PATIENT": {
+                    "DATE OF BIRTH": "1979-03-22",
+                    "FIRST NAME": "ABEL",
+                    "ID": "PATIENT0025",
+                    "LAST NAME": "MANCINI"
+                },
+                "PHARMACY": {
+                    "CITY": "RIBEIRAO PRETO",
+                    "ID": "PHARM0005",
+                    "NAME": "DROGARIA SAO SIMAO"
+                },
+                "TRANSACTION DATE": "2020-01-01"
+            },
+            ...
+        ]
+    }
+
+
+<a id="endpoint_transaction_pharmacy_name_get"></a>
+#### **8.2.** Consulta as transações de uma farmácia pelo nome  [GET]
+
+**Endpoint:**
+
+    GET {url}/transactions/pharmacy/{name}
+
+**Exemplo:**
+
+    GET {url}/transactions/pharmacy/Droga Mais
+
+**Headers:**
+
+    {
+        "Authorization": f"Bearer <access_token>"
+    }
+
+**Retorno:**
+
+    {
+        "Transaction": [
+            {
+                "AMOUNT": "R$ 7.34",
+                "ID": "TRAN0236",
+                "PATIENT": {
+                    "DATE OF BIRTH": "1979-03-22",
+                    "FIRST NAME": "ABEL",
+                    "ID": "PATIENT0025",
+                    "LAST NAME": "MANCINI"
+                },
+                "PHARMACY": {
+                    "CITY": "RIBEIRAO PRETO",
+                    "ID": "PHARM0001",
+                    "NAME": "DROGA MAIS"
+                },
+                "TRANSACTION DATE": "2020-01-07"
+            },
+            {
+                "AMOUNT": "R$ 1.79",
+                "ID": "TRAN0082",
+                "PATIENT": {
+                    "DATE OF BIRTH": "1975-12-01",
+                    "FIRST NAME": "CRISTIANO",
+                    "ID": "PATIENT0036",
+                    "LAST NAME": "FERREIRA"
+                },
+                "PHARMACY": {
+                    "CITY": "RIBEIRAO PRETO",
+                    "ID": "PHARM0001",
+                    "NAME": "DROGA MAIS"
+                },
+                "TRANSACTION DATE": "2020-02-14"
+            },
+            ...
+        ]
+    }
+
+<a id="endpoint_transaction_pharmacy_name_date_get"></a>
+#### **8.3.** Consulta as transações de uma farmácia pelo nome para uma determinada data [GET]
+
+**Endpoint:**
+
+    GET {url}/transactions/pharmacy/{name}/date/{date}
+
+**Exemplo:**
+
+    GET {url}/transactions/pharmacy/DROGAO SUPER/date/2020-02-05
+
+**Headers:**
+
+    {
+        "Authorization": f"Bearer <access_token>"
+    }
+
+**Retorno:**
+
+    {
+        "Transaction": [
+            {
+                "AMOUNT": "R$ 3.50",
+                "ID": "TRAN0001",
+                "PATIENT": {
+                    "DATE OF BIRTH": "1993-09-30",
+                    "FIRST NAME": "CRISTIANO",
+                    "ID": "PATIENT0045",
+                    "LAST NAME": "SALOMAO"
+                },
+                "PHARMACY": {
+                    "CITY": "CAMPINAS",
+                    "ID": "PHARM0008",
+                    "NAME": "DROGAO SUPER"
+                },
+                "TRANSACTION DATE": "2020-02-05"
+            }
+        ]
+    }
+
+
+<a id="endpoint_transaction_patient_get"></a>
+#### **8.4.** Consulta as transações de um paciente pelo nome completo  [GET]
+
+**Endpoint:**
+
+    GET {url}/transactions/patient/{first_name}/{last_name}
+
+**Exemplo:**
+
+    GET {url}/transactions/patient/Joana/SILVA
+
+**Headers:**
+
+    {
+        "Authorization": f"Bearer <access_token>"
+    }
+
+**Retorno:**
+
+    {
+        "Transaction": [
+            {
+                "AMOUNT": "R$ 2.69",
+                "ID": "TRAN0282",
+                "PATIENT": {
+                    "DATE OF BIRTH": "1996-10-25",
+                    "FIRST NAME": "JOANA",
+                    "ID": "PATIENT0001",
+                    "LAST NAME": "SILVA"
+                },
+                "PHARMACY": {
+                    "CITY": "SAO PAULO",
+                    "ID": "PHARM0010",
+                    "NAME": "DROGARIA SAO SIMAO"
+                },
+                "TRANSACTION DATE": "2020-03-18"
+            },
+            ...
+        ]
+    }
+
+
+<a id="endpoint_transaction_period_get"></a>
+#### **8.5.** Consulta as transações de um determinado período [GET]
+
+**Endpoint:**
+
+    GET {url}/transactions/byPeriod/{first_date}/{end_date}
+
+**Exemplo:**
+
+    GET {url}/transactions/byPeriod/2020-01-01/2020-01-08
+
+**Headers:**
+
+    {
+        "Authorization": f"Bearer <access_token>"
+    }
+
+**Retorno:** :
+
+    {
+        "Transaction": [
+            {
+                "AMOUNT": "R$ 40.68",
+                "ID": "TRAN0111",
+                "PATIENT": {
+                    "DATE OF BIRTH": "1979-03-22",
+                    "FIRST NAME": "ABEL",
+                    "ID": "PATIENT0025",
+                    "LAST NAME": "MANCINI"
+                },
+                "PHARMACY": {
+                    "CITY": "RIBEIRAO PRETO",
+                    "ID": "PHARM0005",
+                    "NAME": "DROGARIA SAO SIMAO"
+                },
+                "TRANSACTION DATE": "2020-01-01"
+            },
+            {
+                "AMOUNT": "R$ 33.14",
+                "ID": "TRAN0033",
+                "PATIENT": {
+                    "DATE OF BIRTH": "1977-09-10",
+                    "FIRST NAME": "STEPHANY",
+                    "ID": "PATIENT0008",
+                    "LAST NAME": "FERREIRA"
+                },
+                "PHARMACY": {
+                    "CITY": "SAO PAULO",
+                    "ID": "PHARM0010",
+                    "NAME": "DROGARIA SAO SIMAO"
+                },
+                "TRANSACTION DATE": "2020-01-02"
+            },
+            ...
+        ]
+    }
+
+
+<a id="endpoint_transaction_byvalues_get"></a>
+#### **8.6.** Consulta as transações por uma faixa de valores [GET]
+
+**Endpoint:**
+
+    GET {url}/transactions/byValues/{min_value}/{max_value}
+
+**Exemplo:**
+
+    GET {url}/transactions/byValues/5/12
+
+**Headers:**
+
+    {
+        "Authorization": f"Bearer <access_token>"
+    }
+
+**Retorno:** :
+
+    {
+        "Transaction": [
+            {
+                "AMOUNT": "R$ 11.39",
+                "ID": "TRAN0264",
+                "PATIENT": {
+                    "DATE OF BIRTH": "1984-11-16",
+                    "FIRST NAME": "CRISTIANO",
+                    "ID": "PATIENT0015",
+                    "LAST NAME": "TEIXEIRA"
+                },
+                "PHARMACY": {
+                    "CITY": "LIMEIRA",
+                    "ID": "PHARM0004",
+                    "NAME": "DROGAO SUPER"
+                },
+                "TRANSACTION DATE": "2020-02-10"
+            },
+            {
+                "AMOUNT": "R$ 10.12",
+                "ID": "TRAN0102",
+                "PATIENT": {
+                    "DATE OF BIRTH": "1979-09-27",
+                    "FIRST NAME": "LETICIA",
+                    "ID": "PATIENT0046",
+                    "LAST NAME": "SANTOS"
+                },
+                "PHARMACY": {
+                    "CITY": "RIBEIRAO PRETO",
+                    "ID": "PHARM0003",
+                    "NAME": "SUPER DROGAO"
+                },
+                "TRANSACTION DATE": "2020-05-29"
+            },
+            ...
         ]
     }
