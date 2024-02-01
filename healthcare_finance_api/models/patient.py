@@ -20,6 +20,5 @@ class PatientModel(db.Model):
             "ID": self.UUID,
             "FIRST NAME": self.FIRST_NAME,
             "LAST NAME": self.LAST_NAME,
-            "DATE OF BIRTH": format_date(date=self.DATE_OF_BIRTH, format="%Y-%m-%d")
+            "DATE OF BIRTH": format_date(date=self.DATE_OF_BIRTH, format="%Y-%m-%d"),
         }
-

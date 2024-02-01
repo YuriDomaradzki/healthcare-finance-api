@@ -14,4 +14,6 @@ ENV/
 env.bak/
 venv.bak/
 
-resources/user.py
+.flake8
+.isort.cfg
+pyproject.toml

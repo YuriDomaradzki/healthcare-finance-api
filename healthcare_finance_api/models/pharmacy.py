@@ -19,4 +19,3 @@ class PharmacyModel(db.Model):
             "NAME": self.NAME,
             "CITY": self.CITY,
         }
-

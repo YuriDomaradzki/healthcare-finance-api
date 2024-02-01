@@ -12,8 +12,12 @@ class TransactionsModel(db.Model):
     AMOUNT = db.Column(db.Numeric, nullable=False)
     TIMESTAMP = db.Column(db.DateTime, nullable=False)
 
-    PATIENT_UUID = db.Column(db.String, db.ForeignKey("patients.UUID"), unique=False, nullable=False)
-    PHARMACY_UUID = db.Column(db.String, db.ForeignKey("pharmacies.UUID"), unique=False, nullable=False)
+    PATIENT_UUID = db.Column(
+        db.String, db.ForeignKey("patients.UUID"), unique=False, nullable=False
+    )
+    PHARMACY_UUID = db.Column(
+        db.String, db.ForeignKey("pharmacies.UUID"), unique=False, nullable=False
+    )
 
     patient = db.relationship("PatientModel", back_populates="transactions")
     pharmacy = db.relationship("PharmacyModel", back_populates="transactions")
@@ -21,8 +25,8 @@ class TransactionsModel(db.Model):
     def as_dict(self):
         return {
             "ID": self.UUID,
-            "AMOUNT": f'R$ {round(self.AMOUNT, 2)}', 
+            "AMOUNT": f"R$ {round(self.AMOUNT, 2)}",
             "TRANSACTION DATE": format_date(date=self.TIMESTAMP, format="%Y-%m-%d"),
             "PATIENT": self.patient.as_dict(),
-            "PHARMACY": self.pharmacy.as_dict()
+            "PHARMACY": self.pharmacy.as_dict(),
         }

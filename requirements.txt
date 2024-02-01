@@ -6,3 +6,5 @@ flask-sqlalchemy
 flask-jwt-extended
 passlib
 requests
+black
+flake8

@@ -5,7 +5,13 @@ from flask.views import MethodView
 from flask_smorest import Blueprint, abort
 
 from passlib.hash import pbkdf2_sha256
-from flask_jwt_extended  import create_access_token, create_refresh_token, get_jwt_identity, jwt_required, get_jwt
+from flask_jwt_extended import (
+    create_access_token,
+    create_refresh_token,
+    get_jwt_identity,
+    jwt_required,
+    get_jwt,
+)
 
 from werkzeug.exceptions import BadRequest, Unauthorized
 from sqlalchemy.exc import IntegrityError
@@ -19,33 +25,40 @@ from healthcare_finance_api.utils import string_is_alphanumeric, string_validati
 blp = Blueprint("Users", __name__, "Operations on users")
 
 
-
 @blp.route("/user/<string:username>")
 class User(MethodView):
 
     def __get_json_data(self) -> dict:
         """
-            Gets the JSON data from the request.
+        Gets the JSON data from the request.
 
-            Returns
-            --------
-                JSON data from the request.
+        Returns
+        --------
+            JSON data from the request.
         """
         try:
             return request.get_json()
         except BadRequest as bre:
-            abort(400, message='JSON file cannot be empty, must have username and password!')
+            abort(
+                400,
+                message="JSON file cannot be empty, must have username and password!",
+            )
 
     @jwt_required()
     def get(self, username: str):
         if not string_validation(text=username):
-            raise ValueError("The username entered for the query is in an invalid format!")
+            raise ValueError(
+                "The username entered for the query is in an invalid format!"
+            )
 
         try:
-            user = [user.as_dict() for user in UsersModel.query.filter_by(USERNAME=username).all()]
+            user = [
+                user.as_dict()
+                for user in UsersModel.query.filter_by(USERNAME=username).all()
+            ]
             if not user:
                 raise LookupError(f"No user with username {username}")
-            return {'User': user}
+            return {"User": user}
 
         except ValueError as ve:
             abort(400, message=str(ve))
@@ -54,14 +67,13 @@ class User(MethodView):
         except Exception as e:
             abort(500, message=f"An error has occurred: {str(e)}")
 
-
     @jwt_required()
     def put(self, username: str):
         data = self.__get_json_data()
         keys = data.keys()
         try:
-            new_username = data.get("new_username") if 'new_username' in keys else ''
-            new_password = data.get("new_password") if 'new_password' in keys else ''
+            new_username = data.get("new_username") if "new_username" in keys else ""
+            new_password = data.get("new_password") if "new_password" in keys else ""
 
             user = UsersModel.query.filter_by(USERNAME=username).first()
 
@@ -73,15 +85,14 @@ class User(MethodView):
             db.session.commit()
             db.session.close()
 
-            return {'Sucess': 'The user was updated with successfully'}
+            return {"Sucess": "The user was updated with successfully"}
 
         except ValueError as ve:
             abort(400, message=str(ve))
         except IntegrityError:
-            abort(400, message='An user with this credentials already exists')
+            abort(400, message="An user with this credentials already exists")
         except Exception as e:
             abort(500, message=f"An error has occurred: {str(e)}")
-
 
     @jwt_required()
     def delete(self, username: str):
@@ -92,14 +103,17 @@ class User(MethodView):
             db.session.commit()
             db.session.close()
 
-            return {'Success': 'The user was deleted successfully'}, 200
+            return {"Success": "The user was deleted successfully"}, 200
 
         except ValueError as ve:
             abort(400, message=str(ve))
         except IntegrityError:
-            abort(400, message='An user with this credentials already exists')
+            abort(400, message="An user with this credentials already exists")
         except Exception as e:
-            abort(500, message=f"An error has occurred: Check if the username you want to delete is correct.")
+            abort(
+                500,
+                message=f"An error has occurred: Check if the username you want to delete is correct.",
+            )
 
 
 @blp.route("/register")
@@ -107,44 +121,51 @@ class UserRegister(MethodView):
 
     def __get_json_data(self) -> dict:
         """
-            Gets the JSON data from the request.
+        Gets the JSON data from the request.
 
-            Returns
-            --------
-                JSON data from the request.
+        Returns
+        --------
+            JSON data from the request.
         """
         try:
             return request.get_json()
         except BadRequest as bre:
-            abort(400, message='JSON file cannot be empty, must have username and password!')
+            abort(
+                400,
+                message="JSON file cannot be empty, must have username and password!",
+            )
 
-
-    def __validate_keys(self, data: dict, keys: Optional[List]=['username', 'password']) -> None:
+    def __validate_keys(
+        self, data: dict, keys: Optional[List] = ["username", "password"]
+    ) -> None:
         """
-            Validates that the required keys are present in the data.
+        Validates that the required keys are present in the data.
 
-            Parameters
-            ----------
-                data: str,
-                    Data to be validated.
-                keys: Optional[List],
-                    List of required keys. Default is ['username', 'password'].
+        Parameters
+        ----------
+            data: str,
+                Data to be validated.
+            keys: Optional[List],
+                List of required keys. Default is ['username', 'password'].
         """
         try:
-            valid_keys = all(key.lower() in [k.lower() for k in data.keys()] for key in keys)
+            valid_keys = all(
+                key.lower() in [k.lower() for k in data.keys()] for key in keys
+            )
             if not valid_keys:
-                raise BadRequest(f"You must provide the following keys: {', '.join(keys)}")
+                raise BadRequest(
+                    f"You must provide the following keys: {', '.join(keys)}"
+                )
         except BadRequest as bre:
-            abort(400,  message=str(bre))
-
+            abort(400, message=str(bre))
 
     def post(self):
         data = self.__get_json_data()
         self.__validate_keys(data=data)
 
         try:
-            username = data.get('username')
-            password = data.get('password')
+            username = data.get("username")
+            password = data.get("password")
 
             if not string_is_alphanumeric(text=username):
                 raise ValueError("The username entered for is in an invalid format!")
@@ -152,19 +173,22 @@ class UserRegister(MethodView):
             if UsersModel.verify_username(username=username):
                 raise ValueError(f"User with username '{username}' already exists.")
 
-            user = UsersModel(UUID=UsersModel.generate_uuid(), USERNAME=username, 
-                              PASSWORD=pbkdf2_sha256.hash(password))
+            user = UsersModel(
+                UUID=UsersModel.generate_uuid(),
+                USERNAME=username,
+                PASSWORD=pbkdf2_sha256.hash(password),
+            )
 
             db.session.add(user)
             db.session.commit()
             db.session.close()
 
-            return {'Success': f'User {username} added!'}, 201
+            return {"Success": f"User {username} added!"}, 201
 
         except ValueError as ve:
             abort(400, message=str(ve))
         except IntegrityError:
-            abort(409, message='An user with this credentials already exists')
+            abort(409, message="An user with this credentials already exists")
         except Exception as e:
             abort(500, message=f"An error has occurred: {str(e)}")
 
@@ -174,44 +198,51 @@ class UserLogin(MethodView):
 
     def __get_json_data(self) -> dict:
         """
-            Gets the JSON data from the request.
+        Gets the JSON data from the request.
 
-            Returns
-            --------
-                JSON data from the request.
+        Returns
+        --------
+            JSON data from the request.
         """
         try:
             return request.get_json()
         except BadRequest as bre:
-            abort(400, message='JSON file cannot be empty, must have username and password!')
+            abort(
+                400,
+                message="JSON file cannot be empty, must have username and password!",
+            )
 
-
-    def __validate_keys(self, data: dict, keys: Optional[List]=['username', 'password']) -> None:
+    def __validate_keys(
+        self, data: dict, keys: Optional[List] = ["username", "password"]
+    ) -> None:
         """
-            Validates that the required keys are present in the data.
+        Validates that the required keys are present in the data.
 
-            Parameters
-            ----------
-                data: str,
-                    Data to be validated.
-                keys: Optional[List],
-                    List of required keys. Default is ['username', 'password'].
+        Parameters
+        ----------
+            data: str,
+                Data to be validated.
+            keys: Optional[List],
+                List of required keys. Default is ['username', 'password'].
         """
         try:
-            valid_keys = all(key.lower() in [k.lower() for k in data.keys()] for key in keys)
+            valid_keys = all(
+                key.lower() in [k.lower() for k in data.keys()] for key in keys
+            )
             if not valid_keys:
-                raise BadRequest(f"You must provide the following keys: {', '.join(keys)}")
+                raise BadRequest(
+                    f"You must provide the following keys: {', '.join(keys)}"
+                )
         except BadRequest as bre:
-            abort(400,  message=str(bre))
-
+            abort(400, message=str(bre))
 
     def post(self):
         data = self.__get_json_data()
         self.__validate_keys(data=data)
 
         try:
-            username = data.get('username')
-            password = data.get('password')
+            username = data.get("username")
+            password = data.get("password")
 
             if not string_is_alphanumeric(text=username):
                 raise ValueError("The username entered for is in an invalid format!")
@@ -221,7 +252,7 @@ class UserLogin(MethodView):
             if user and pbkdf2_sha256.verify(password, user.PASSWORD):
                 access_token = create_access_token(identity=user.UUID, fresh=True)
                 refresh_token = create_refresh_token(identity=user.UUID)
-                return {'access_token': access_token, "refresh_token": refresh_token}
+                return {"access_token": access_token, "refresh_token": refresh_token}
             raise Unauthorized("Invalid credentials")
 
         except ValueError as ve:
@@ -250,4 +281,3 @@ class UserLogout(MethodView):
         jti = get_jwt()["jti"]
         BLOCKLIST.add(jti)
         return {"message": "Successfully logged out."}
-
