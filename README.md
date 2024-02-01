@@ -43,6 +43,12 @@ Este repositório contém a implementação de uma API REST privada para o setor
         - [Consulta as transações de um paciente pelo nome completo](#endpoint_transaction_patient_get)
         - [Consulta as transações de um determinado período](#endpoint_transaction_period_get)
         - [Consulta as transações por uma faixa de valores](#endpoint_transaction_byvalues_get)
+3. [Testes](#tests)
+   - [Testar as funcionalidades de Patients](#test_patients)
+   - [Testar as funcionalidades de Pharmacies](#test_pharmacies)
+   - [Testar as funcionalidades de Transactions](#test_transactions)
+   - [Testar as funcionalidades de User](#test_user)
+4. [Garantir Padrões e estilo de códigos de forma automatizada](#code_patterns)
 
 
 <a id="instalation"></a>
@@ -880,3 +886,79 @@ O endpoint `Transactions` é projetado para fornecer informações detalhadas so
             ...
         ]
     }
+
+<a id="tests"></a>
+## Testes
+
+Nesta seção, você encontrará os testes relacionados às funcionalidades da API.
+
+
+<a id="test_patients"></a>
+### **1.** Testar as funcionalidades de Patients
+
+A seguir, estão alguns cenários de teste para validar as funcionalidades relacionadas aos pacientes:
+
+ - Listagem de pacientes para garantir a obtenção de uma lista válida.
+ - Consulta de paciente pelo nome, validando a obtenção de informações corretas com um nome válido e a rejeição de nomes inválidos.
+ - Consulta de paciente pela data de nascimento, assegurando a obtenção de informações corretas com uma data válida e a rejeição de datas inválidas.
+ - Consulta de paciente pelo primeiro e último nome, verificando a obtenção de informações corretas com nomes válidos e a rejeição de nomes inválidos.
+
+ Utilize o comando `make test_patient` para executar os casos de teste:
+
+    make test_patient
+
+<a id="test_pharmacies"></a>
+### **2.** Testar as funcionalidades de Pharmacies
+
+A seguir, estão alguns cenários de teste para validar as funcionalidades relacionadas às farmácies:
+
+ - Listagem de Farmácias para garantir a obtenção de uma lista válida ao estar autenticado.
+ - Obtenção de Farmácia por Nome Válido para verificar a obtenção de informações corretas com um nome válido e rejeição de nomes inválidos ao estar autenticado.
+ - Obtenção de Farmácia por Nome Inválido para validar a impossibilidade de obter informações de farmácias com nome inválido, mesmo estando autenticado.
+ - Obtenção de Farmácia por Cidade Válida para assegurar a obtenção de informações corretas por uma cidade válida ao estar autenticado.
+ - Obtenção de Farmácia por Cidade Inválida para verificar a impossibilidade de obter informações de farmácias com cidade inválida, mesmo estando autenticado.
+ - Obtenção de Farmácia por Nome e Cidade Válidos para garantir a obtenção de informações corretas com nome e cidade válidos ao estar autenticado.
+ - Obtenção de Farmácia por Cidade Inválida e Nome Válido para validar a impossibilidade de obter informações de farmácias com cidade inválida, mesmo com nome válido, estando autenticado.
+ - Obtenção de Farmácia por Cidade Válida e Nome Inválido para validar a impossibilidade de obter informações de farmácias com nome inválido, mesmo com cidade válida, estando autenticado.
+
+ Utilize o comando `make test_pharmacy` para executar os casos de teste:
+
+    make test_pharmacy
+
+
+<a id="test_transactions"></a>
+### **3.** Testar as funcionalidades de Transactions
+
+A seguir, estão alguns cenários de teste para validar as funcionalidades relacionadas as transações:
+
+ - Listagem de Transações para garantir a obtenção de uma lista válida ao estar autenticado.
+ - Obtenção de Transações por Nome de Farmácia Válido para verificar a obtenção de informações corretas com um nome de farmácia válido e rejeição de nomes inválidos ao estar autenticado.
+ - Obtenção de Transações por Nome de Farmácia Inválido para validar a impossibilidade de obter informações de transações com nome de farmácia inválido, mesmo estando autenticado.
+ - Obtenção de Transações por Nome de Farmácia e Data de Transação Válidos para garantir a obtenção de informações corretas com nome de farmácia e data válidos ao estar autenticado.
+ - Obtenção de Transações por Nome de Farmácia Inválido e Data de Transação Válida para validar a impossibilidade de obter informações de transações com nome de farmácia inválido, mesmo com data válida, estando autenticado.
+
+ Utilize o comando `make test_transactions` para executar os casos de teste:
+
+    make test_transactions
+
+<a id="test_user"></a>
+### **4.** Testar as funcionalidades de User
+
+A seguir, estão alguns cenários de teste para validar as funcionalidades relacionados aos usuários:
+
+ - Obtenção de Informações do Usuário com Nome de Usuário Válido: Garante que seja possível obter informações do usuário com um nome de usuário válido ao estar autenticado.
+ - Obtenção de Informações do Usuário com Nome de Usuário Inválido: Garante que não seja possível obter informações do usuário com um nome de usuário inválido ao estar autenticado.
+ - Logout: Verifica se o processo de logout ocorre corretamente, encerrando a sessão do usuário autenticado.
+ - Login com Nome de Usuário Válido e Senha Inválida: Valida que não seja possível realizar o login com um nome de usuário válido e senha inválida.
+ - Login com Nome de Usuário Inválido e Senha Válida: Valida que não seja possível realizar o login com um nome de usuário inválido e senha válida.
+
+ Utilize o comando `make test_user` para executar os casos de teste:
+
+    make test_user
+
+<a id="code_patterns"></a>
+## Garantir Padrões e estilo de códigos de forma automatizada
+
+A utilização do comando `make lint` é uma prática fundamental para garantir a padronização e o estilo do código de maneira automatizada. Este comando incorpora diversas ferramentas e processos que analisam o código-fonte, assegurando sua conformidade com as diretrizes estabelecidas. Para utilizá-lo, entre no diretório raiz do projeto e execute o seguinte comando:
+
+    make lint
