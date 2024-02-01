@@ -1,11 +1,12 @@
 FROM python:3.10
 EXPOSE 5000
+
+ADD . /app
 WORKDIR /app
 
-RUN pip3 install --upgrade pip && \
-    pip install --upgrade setuptools && \
-    pip install --upgrade wheel
+RUN	pip install --upgrade pip && \
+	pip install --upgrade setuptools
 
-COPY requirements.txt .
-RUN pip install -e .
+RUN pip install -e .[all]
+
 CMD ["flask", "run", "--host", "0.0.0.0"]
