@@ -1,3 +1,5 @@
+from flask import request
+
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
 from flask_jwt_extended import jwt_required
@@ -28,23 +30,51 @@ class PharmaciesList(MethodView):
             abort(500, message=f"An error has occurred: {str(e)}")
 
 
-@blp.route("/pharmacy/name/<string:name>")
-class PharmacyByName(MethodView):
+@blp.route("/pharmacy")
+class Pharmacy(MethodView):
 
     @jwt_required()
-    def get(self, name):
-        if not string_validation(text=name):
-            raise ValueError("The name entered for the query is in an invalid format!")
+    def get(self):
+
+        name = request.args.get('name')
+        city = request.args.get('city')
 
         try:
-            pharmacy = [
-                pharmacy.as_dict()
-                for pharmacy in PharmacyModel.query.filter_by(NAME=name.upper()).all()
-            ]
-            if not pharmacy:
-                raise LookupError(f"No pharmacies called {name}")
-            return {"Pharmacy": pharmacy}
+            if city and name:
+                if not string_validation(text=city) or not string_validation(text=name):
+                    raise ValueError(
+                        "The city or pharmacy name entered for the query is in an invalid format!"
+                    )
+                pharmacy = [
+                    pharmacy.as_dict()
+                    for pharmacy in PharmacyModel.query.filter_by(
+                        CITY=city.upper(), NAME=name.upper()
+                    ).all()
+                ]
+            elif city:
+                if not string_validation(text=city):
+                    raise ValueError("The city entered for the query is in an invalid format!")
 
+                pharmacy = [
+                    pharmacy.as_dict()
+                    for pharmacy in PharmacyModel.query.filter_by(CITY=city.upper()).all()
+                ]
+            elif name:
+                if not string_validation(text=name):
+                    raise ValueError("The name entered for the query is in an invalid format!")
+
+                pharmacy = [
+                    pharmacy.as_dict()
+                    for pharmacy in PharmacyModel.query.filter_by(NAME=name.upper()).all()
+                ]
+            else:
+                raise ValueError(
+                        "The query parameters entered isn't available!"
+                    )
+
+            if not pharmacy:
+                raise LookupError("No pharmacies found for the search!")
+            return {"Pharmacy": pharmacy}
         except ValueError as ve:
             abort(400, message=str(ve))
         except LookupError as le:
@@ -52,56 +82,3 @@ class PharmacyByName(MethodView):
         except Exception as e:
             abort(500, message=f"An error has occurred: {str(e)}")
 
-
-@blp.route("/pharmacy/city/<string:city>")
-class PharmacyByCity(MethodView):
-
-    @jwt_required()
-    def get(self, city):
-        if not string_validation(text=city):
-            raise ValueError("The city entered for the query is in an invalid format!")
-
-        try:
-            pharmacy = [
-                pharmacy.as_dict()
-                for pharmacy in PharmacyModel.query.filter_by(CITY=city.upper()).all()
-            ]
-            if not pharmacy:
-                raise LookupError(f"No pharmacies in {city}")
-            return {"Pharmacy": pharmacy}
-
-        except ValueError as ve:
-            abort(400, message=str(ve))
-        except LookupError as le:
-            abort(404, message=str(le))
-        except Exception as e:
-            abort(500, message=f"An error has occurred: {str(e)}")
-
-
-@blp.route("/pharmacy/city/<string:city>/name/<string:name>")
-class PharmacyByCityAndName(MethodView):
-
-    @jwt_required()
-    def get(self, city, name):
-        if not string_validation(text=city) or not string_validation(text=name):
-            raise ValueError(
-                "The city or pharmacy name entered for the query is in an invalid format!"
-            )
-
-        try:
-            pharmacy = [
-                pharmacy.as_dict()
-                for pharmacy in PharmacyModel.query.filter_by(
-                    CITY=city.upper(), NAME=name.upper()
-                ).all()
-            ]
-            if not pharmacy:
-                raise LookupError(f"No pharmacies called {name} in {city}")
-            return {"Pharmacy": pharmacy}
-
-        except ValueError as ve:
-            abort(400, message=str(ve))
-        except LookupError as le:
-            abort(404, message=str(le))
-        except Exception as e:
-            abort(500, message=f"An error has occurred: {str(e)}")

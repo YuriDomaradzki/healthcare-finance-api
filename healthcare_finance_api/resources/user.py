@@ -25,7 +25,7 @@ from healthcare_finance_api.utils import string_is_alphanumeric, string_validati
 blp = Blueprint("Users", __name__, "Operations on users")
 
 
-@blp.route("/user/<string:username>")
+@blp.route("/user")
 class User(MethodView):
 
     def __get_json_data(self) -> dict:
@@ -45,7 +45,10 @@ class User(MethodView):
             )
 
     @jwt_required()
-    def get(self, username: str):
+    def get(self):
+
+        username = request.args.get('username')
+
         if not string_validation(text=username):
             raise ValueError(
                 "The username entered for the query is in an invalid format!"
@@ -68,7 +71,10 @@ class User(MethodView):
             abort(500, message=f"An error has occurred: {str(e)}")
 
     @jwt_required()
-    def put(self, username: str):
+    def put(self):
+
+        username = request.args.get('username')
+
         data = self.__get_json_data()
         keys = data.keys()
         try:
@@ -95,7 +101,10 @@ class User(MethodView):
             abort(500, message=f"An error has occurred: {str(e)}")
 
     @jwt_required()
-    def delete(self, username: str):
+    def delete(self):
+
+        username = request.args.get('username')
+
         try:
             user = UsersModel.query.filter_by(USERNAME=username).first()
 

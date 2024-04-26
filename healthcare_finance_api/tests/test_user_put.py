@@ -17,7 +17,7 @@ class TestUsersResourcePut(unittest.TestCase):
         payload = {"new_username": "1"}
         headers = {"Authorization": f"Bearer {self.token}"}
         response = requests.put(
-            f"{self.base_url}/user/{username}", headers=headers, json=payload
+            f"{self.base_url}/user?username={username}", headers=headers, json=payload
         )
 
         self.assertNotEqual(response.status_code, 200)
@@ -27,7 +27,7 @@ class TestUsersResourcePut(unittest.TestCase):
         payload = {"new_password": ""}
         headers = {"Authorization": f"Bearer {self.token}"}
         response = requests.put(
-            f"{self.base_url}/user/{username}", headers=headers, json=payload
+            f"{self.base_url}/user?username={username}", headers=headers, json=payload
         )
 
         self.assertNotEqual(response.status_code, 200)
@@ -37,7 +37,7 @@ class TestUsersResourcePut(unittest.TestCase):
         payload = {"new_username": "yuri", "new_password": "12345"}
         headers = {"Authorization": f"Bearer {self.token}"}
         response = requests.put(
-            f"{self.base_url}/user/{username}", headers=headers, json=payload
+            f"{self.base_url}/user?username={username}", headers=headers, json=payload
         )
 
         self.assertEqual(response.status_code, 200)

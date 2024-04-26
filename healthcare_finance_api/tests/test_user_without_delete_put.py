@@ -15,14 +15,14 @@ class TestUsersResourceWithoutDeleteAndPut(unittest.TestCase):
     def test_get_user_informations_with_valid_username(self):
         username = "Yuri"
         headers = {"Authorization": f"Bearer {self.token}"}
-        response = requests.get(f"{self.base_url}/user/{username}", headers=headers)
+        response = requests.get(f"{self.base_url}/user?username={username}", headers=headers)
 
         self.assertEqual(response.status_code, 200)
 
     def test_get_user_informations_with_invalid_username(self):
         username = "1"
         headers = {"Authorization": f"Bearer {self.token}"}
-        response = requests.get(f"{self.base_url}/user/{username}", headers=headers)
+        response = requests.get(f"{self.base_url}/user?username={username}", headers=headers)
 
         self.assertNotEqual(response.status_code, 200)
 
