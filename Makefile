@@ -39,4 +39,8 @@ install_docker:
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg && \
     echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu focal stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null && \
     sudo apt update && \
+<<<<<<< HEAD
     sudo apt install -y docker-ce docker-ce-cli containerd.io
+=======
+    sudo apt install -y docker-ce docker-ce-cli containerd.io
+>>>>>>> df92161d17e6f9b62868867fcc59e7cf84603117

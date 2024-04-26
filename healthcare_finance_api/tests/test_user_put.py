@@ -8,7 +8,7 @@ class TestUsersResourcePut(unittest.TestCase):
         self.base_url = "http://127.0.0.1:5000/"
 
         payload = {"username": "Yuri", "password": "teste1234"}
-        response = requests.post(f"{self.base_url}/login", json=payload)
+        response = requests.post(f"{self.base_url}login", json=payload)
         self.token = response.json().get("access_token")
 
     # TESTS IN {self.base}/user/{username}

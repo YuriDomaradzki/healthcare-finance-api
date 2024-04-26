@@ -7,14 +7,14 @@ class TestPharmaciesResources(unittest.TestCase):
     def setUp(self):
         self.base_url = "http://127.0.0.1:5000/"
 
-        payload = {"username": "yuri", "password": "teste1234"}
-        response = requests.post(f"{self.base_url}/login", json=payload)
+        payload = {"username": "Yuri", "password": "teste1234"}
+        response = requests.post(f"{self.base_url}login", json=payload)
         self.token = response.json().get("access_token")
 
     # TESTS IN {self.base_url}/pharmacies
     def test_list_pharmacies_values_must_return_list(self):
         headers = {"Authorization": f"Bearer {self.token}"}
-        response = requests.get(f"{self.base_url}/pharmacies", headers=headers)
+        response = requests.get(f"{self.base_url}pharmacies", headers=headers)
         self.assertEqual(response.status_code, 200)
         self.assertIsInstance(response.json()["Pharmacies"], list)
 
@@ -23,7 +23,11 @@ class TestPharmaciesResources(unittest.TestCase):
         name = "Droga Mais"
         headers = {"Authorization": f"Bearer {self.token}"}
         response = requests.get(
+<<<<<<< HEAD
             f"{self.base_url}/pharmacy?name={name}", headers=headers
+=======
+            f"{self.base_url}pharmacy/name/{name}", headers=headers
+>>>>>>> df92161d17e6f9b62868867fcc59e7cf84603117
         )
 
         self.assertEqual(response.status_code, 200)
@@ -32,7 +36,11 @@ class TestPharmaciesResources(unittest.TestCase):
         name = "DROGA1SUPER"
         headers = {"Authorization": f"Bearer {self.token}"}
         response = requests.get(
+<<<<<<< HEAD
             f"{self.base_url}/pharmacy?name={name}", headers=headers
+=======
+            f"{self.base_url}pharmacy/name/{name}", headers=headers
+>>>>>>> df92161d17e6f9b62868867fcc59e7cf84603117
         )
 
         self.assertNotEqual(response.status_code, 200)
@@ -42,7 +50,11 @@ class TestPharmaciesResources(unittest.TestCase):
         name = "Sao Simao"
         headers = {"Authorization": f"Bearer {self.token}"}
         response = requests.get(
+<<<<<<< HEAD
             f"{self.base_url}/pharmacy?city={name}", headers=headers
+=======
+            f"{self.base_url}pharmacy/city/{name}", headers=headers
+>>>>>>> df92161d17e6f9b62868867fcc59e7cf84603117
         )
 
         self.assertEqual(response.status_code, 200)
@@ -51,7 +63,11 @@ class TestPharmaciesResources(unittest.TestCase):
         name = ""
         headers = {"Authorization": f"Bearer {self.token}"}
         response = requests.get(
+<<<<<<< HEAD
             f"{self.base_url}/pharmacy?city={name}", headers=headers
+=======
+            f"{self.base_url}pharmacy/city/{name}", headers=headers
+>>>>>>> df92161d17e6f9b62868867fcc59e7cf84603117
         )
 
         self.assertNotEqual(response.status_code, 200)
@@ -61,7 +77,11 @@ class TestPharmaciesResources(unittest.TestCase):
         city, name = "Sao Paulo", "Droga Mais"
         headers = {"Authorization": f"Bearer {self.token}"}
         response = requests.get(
+<<<<<<< HEAD
             f"{self.base_url}/pharmacy?city={city}&name={name}", headers=headers
+=======
+            f"{self.base_url}pharmacy/city/{city}/name/{name}", headers=headers
+>>>>>>> df92161d17e6f9b62868867fcc59e7cf84603117
         )
 
         self.assertEqual(response.status_code, 200)
@@ -72,7 +92,11 @@ class TestPharmaciesResources(unittest.TestCase):
         city, name = "Sa1 Paulo", "Droga Mais"
         headers = {"Authorization": f"Bearer {self.token}"}
         response = requests.get(
+<<<<<<< HEAD
             f"{self.base_url}/pharmacy?city={city}&name={name}", headers=headers
+=======
+            f"{self.base_url}pharmacy/city/{city}/name/{name}", headers=headers
+>>>>>>> df92161d17e6f9b62868867fcc59e7cf84603117
         )
 
         self.assertNotEqual(response.status_code, 200)
@@ -83,7 +107,11 @@ class TestPharmaciesResources(unittest.TestCase):
         city, name = "Sao Paulo", ""
         headers = {"Authorization": f"Bearer {self.token}"}
         response = requests.get(
+<<<<<<< HEAD
             f"{self.base_url}/pharmacy?city={city}&name={name}", headers=headers
+=======
+            f"{self.base_url}pharmacy/city/{city}/name/{name}", headers=headers
+>>>>>>> df92161d17e6f9b62868867fcc59e7cf84603117
         )
 
         self.assertNotEqual(response.status_code, 200)
